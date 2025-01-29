@@ -1,0 +1,11 @@
+export default {
+    BASIC_BACKGROUND:"#F5F5f",
+    ATCIVE:'#057DFE',
+    HEART:'#F13939',
+    WHITE:'#FFFFFF',
+    YELLOW:'#FFC107',
+    BALCK:"#000000",
+    GRAY:"#7C7C7C",
+    LIGHTGRAY:'#969696',
+    EXRALIGHTGRAY:'#E5E5E5'
+}
