@@ -27,8 +27,17 @@ const getUpcomingMovies = async () => {
         return null; // Return null if API call fails
     }
 }; 
+const getGenres = async () => {
+    try {
+        const response = await api.get(ENDPOINTS.GENRES);
+        return response; // Return only the movie data
+    } catch (error) {
+        console.error("Error fetching now playing movies:", error.response?.data || error.message);
+        return null; // Return null if API call fails
+    }
+}; 
 
 // Function to get the full poster URL
 const getPoster = (path) => `${TMDB_IMAGE_BASE_URL}/original/${path}`;
 
-export { getNowPlayingMovies, getPoster,getUpcomingMovies }
+export { getNowPlayingMovies, getPoster,getUpcomingMovies,getGenres }
