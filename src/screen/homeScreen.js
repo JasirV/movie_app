@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   FlatList,
   ScrollView,
@@ -11,11 +11,22 @@ import COLOR from "../constants/colors";
 import GenreCard from "../components/genreCard";
 import ItemSeparator from "../components/itemSeparator";
 import MovieCard from "../components/movieCard";
-
+import { getNowPlayingMovies } from "../services/movieService";
 const Genres = ["All", "Action", "Comedy", "Romance", "Horror", "Sci-Fi"];
 
 const HomeScreen = () => {
   const [acitcveGoner,setActiveGoner]=useState("All")
+  const [nowPlaying,setNowPlaying]=useState({})
+  useEffect(() => {
+    const fetchMovies = async () => {
+        const response = await getNowPlayingMovies();
+        setNowPlaying(response.data)
+    }
+
+    fetchMovies(); 
+  }, []);
+
+
   return (
     <ScrollView contentContainerStyle={style.container}>
       <StatusBar style="auto" translucent={false} />
@@ -33,19 +44,19 @@ const HomeScreen = () => {
         ListHeaderComponent={<ItemSeparator  width={20} />}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => <GenreCard  gonerName={item} active={item===acitcveGoner?true:false} onPress={(gonerName)=>{setActiveGoner(gonerName)}}/>}
-        />
+        /> 
         </View>
 
         <View>
           <FlatList 
-          data={Genres}
+          data={nowPlaying.results}
           horizontal
           showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item}
+          keyExtractor={(item) => item.id.toString()}
           ListFooterComponent={()=> <ItemSeparator width={20}/>}
           ListHeaderComponent={<ItemSeparator  width={20} />}
           ItemSeparatorComponent={() => <ItemSeparator  width={20} />}
-          renderItem={({ item }) => <MovieCard />}
+          renderItem={({ item }) => <MovieCard titile={item.title} language={item.original_language} voteAverage={item.vote_average} voteCount={item.vote_count} poster={item.poster_path}/>}
           />
         </View>
     </ScrollView>

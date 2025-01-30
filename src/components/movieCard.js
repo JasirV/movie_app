@@ -1,30 +1,31 @@
 import React, { useState } from 'react'
-import { Image, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native'
+import { Image, ImageBackground, StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native'
 import COLORS from '../constants/colors'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import IMAGE from '../constants/images'
+import { getPoster } from '../services/movieService';
 
 
-const MovieCard = () => {
+const MovieCard = ({titile,language,voteAverage,mvoteCount,poster}) => {
     const [like,setLike]=useState(false)
   return (
     <TouchableOpacity>
-    <View style={style.container}>
+    <ImageBackground style={style.container} source={{uri:getPoster(poster)}}>
         <View style={style.imdbContainer}>
             <Image source={IMAGE.IMDB} resizeMode='cover' style={style.imbImage}/>
-            <Text style={style.imdbRating}>9.4</Text>
+            <Text style={style.imdbRating}>{voteAverage}</Text>
         </View>
         <TouchableNativeFeedback onPress={()=>setLike(!like)}>
         <Ionicons name={like?"heart":"heart-outline"} size={25} color={like?COLORS.HEART:COLORS.WHITE}  style={{position:'absolute',bottom:10,left:10}} />
         </TouchableNativeFeedback>
-    </View>
+    </ImageBackground>
     <View>
-        <Text style={style.moveiTitle} numberOfLines={3}>URI - Surgical Strike</Text>
+        <Text style={style.moveiTitle} numberOfLines={3}>{titile}</Text>
         <View style={style.movieSubTitleContainer}>
-            <Text style={style.movieSubTitle}>Hindi | (U/A)</Text>
+            <Text style={style.movieSubTitle}>{language}</Text>
             <View style={style.rowAndCenter}>
             <Ionicons name="heart" size={17} color={COLORS.HEART} style={{marginRight:5}} />
-                <Text style={style.movieSubTitle}>90%</Text>
+                <Text style={style.movieSubTitle}>{mvoteCount}</Text>
             </View>
         </View>
     </View>
