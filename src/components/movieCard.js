@@ -6,25 +6,25 @@ import IMAGE from '../constants/images'
 import { getPoster } from '../services/movieService';
 
 
-const MovieCard = ({titile,language,voteAverage,mvoteCount,poster}) => {
+const MovieCard = ({titile,language,voteAverage,mvoteCount,poster,size}) => {
     const [like,setLike]=useState(false)
   return (
-    <TouchableOpacity>
-    <ImageBackground style={style.container} source={{uri:getPoster(poster)}}>
-        <View style={style.imdbContainer}>
-            <Image source={IMAGE.IMDB} resizeMode='cover' style={style.imbImage}/>
-            <Text style={style.imdbRating}>{voteAverage}</Text>
+    <TouchableOpacity activeOpacity={0.8}>
+    <ImageBackground imageStyle={{borderRadius:12}} style={{...style.container,width:230*size,height:340*size}} source={{uri:getPoster(poster)}}>
+        <View style={{...style.imdbContainer,paddingVertical:3*size}}>
+            <Image source={IMAGE.IMDB} resizeMode='cover' style={{...style.imbImage,height:20*size,width:50*size}}/>
+            <Text style={{...style.imdbRating,marginRight:5*size,fontSize:14*size}}>{voteAverage}</Text>
         </View>
         <TouchableNativeFeedback onPress={()=>setLike(!like)}>
-        <Ionicons name={like?"heart":"heart-outline"} size={25} color={like?COLORS.HEART:COLORS.WHITE}  style={{position:'absolute',bottom:10,left:10}} />
+        <Ionicons name={like?"heart":"heart-outline"} size={25*size} color={like?COLORS.HEART:COLORS.WHITE}   style={{position:'absolute',bottom:10,left:10}} />
         </TouchableNativeFeedback>
     </ImageBackground>
     <View>
-        <Text style={style.moveiTitle} numberOfLines={3}>{titile}</Text>
+        <Text style={{...style.moveiTitle,width:230*size}} numberOfLines={3}>{titile}</Text>
         <View style={style.movieSubTitleContainer}>
             <Text style={style.movieSubTitle}>{language}</Text>
             <View style={style.rowAndCenter}>
-            <Ionicons name="heart" size={17} color={COLORS.HEART} style={{marginRight:5}} />
+            <Ionicons name="heart" size={17*size} color={COLORS.HEART} style={{marginRight:5}} />
                 <Text style={style.movieSubTitle}>{mvoteCount}</Text>
             </View>
         </View>
@@ -35,7 +35,6 @@ const MovieCard = ({titile,language,voteAverage,mvoteCount,poster}) => {
 
 const style=StyleSheet.create({
     container:{
-        backgroundColor:COLORS.ATCIVE,
         height:340,
         width:230,
         borderRadius:12,
@@ -83,4 +82,7 @@ const style=StyleSheet.create({
     }
 })
 
+MovieCard.defaultProps={
+    size:1,
+}
 export default MovieCard

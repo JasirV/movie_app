@@ -11,16 +11,19 @@ import COLOR from "../constants/colors";
 import GenreCard from "../components/genreCard";
 import ItemSeparator from "../components/itemSeparator";
 import MovieCard from "../components/movieCard";
-import { getNowPlayingMovies } from "../services/movieService";
+import { getNowPlayingMovies, getUpcomingMovies } from "../services/movieService";
 const Genres = ["All", "Action", "Comedy", "Romance", "Horror", "Sci-Fi"];
 
 const HomeScreen = () => {
   const [acitcveGoner,setActiveGoner]=useState("All")
   const [nowPlaying,setNowPlaying]=useState({})
+  const [upcoming,setUpcoming]=useState({})
   useEffect(() => {
     const fetchMovies = async () => {
         const response = await getNowPlayingMovies();
         setNowPlaying(response.data)
+        const upresponse=await getUpcomingMovies()
+        setUpcoming(upresponse.data)
     }
 
     fetchMovies(); 
@@ -28,11 +31,11 @@ const HomeScreen = () => {
 
 
   return (
-    <ScrollView contentContainerStyle={style.container}>
+    <ScrollView style={style.container}>
       <StatusBar style="auto" translucent={false} />
       <View style={style.headContainer}>
         <Text style={style.headerTitle}>Now Playing</Text>
-        <Text style={style.headerSubTitle}>View All</Text>
+        <Text style={style.headerSubTitle}>VIEW ALL</Text>
       </View>
       <View style={style.gonerListContainer}>
       <FlatList
@@ -57,6 +60,24 @@ const HomeScreen = () => {
           ListHeaderComponent={<ItemSeparator  width={20} />}
           ItemSeparatorComponent={() => <ItemSeparator  width={20} />}
           renderItem={({ item }) => <MovieCard titile={item.title} language={item.original_language} voteAverage={item.vote_average} voteCount={item.vote_count} poster={item.poster_path}/>}
+          />
+        </View>
+
+
+        <View style={style.headContainer}>
+        <Text style={style.headerTitle}>Coming Soon</Text>
+        <Text style={style.headerSubTitle}>VIEW ALL</Text>
+      </View>
+      <View>
+          <FlatList 
+          data={upcoming.results}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item.id.toString()}
+          ListFooterComponent={()=> <ItemSeparator width={20}/>}
+          ListHeaderComponent={<ItemSeparator  width={20} />}
+          ItemSeparatorComponent={() => <ItemSeparator  width={20} />}
+          renderItem={({ item }) => <MovieCard titile={item.title} language={item.original_language} voteAverage={item.vote_average} voteCount={item.vote_count} poster={item.poster_path} size={.8}/>}
           />
         </View>
     </ScrollView>
