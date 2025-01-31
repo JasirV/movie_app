@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Image, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Image, ScrollView, StatusBar, StyleSheet, Text,  TouchableOpacity, View } from 'react-native'
 import COLOR from '../constants/colors'
 import { getMovie, getPoster } from '../services/movieService'
 import ItemSeparator from '../components/itemSeparator'
 import {LinearGradient} from 'expo-linear-gradient'
+import { Feather } from '@expo/vector-icons';
 
 const {height,width}=Dimensions.get('screen')
 const setHeight=(h)=>(height/100)*h
@@ -33,7 +34,12 @@ const [movie,setMovie]=useState({})
     <View style={style.moviePosterImageContainer}>
       <Image  style={style.moviePosterImage} resizeMode='cover' source={{uri:getPoster(movie.backdrop_path)}}/>
     </View>
-    
+    <View style={style.headerContainer}>
+      <TouchableOpacity>
+      <Feather name="chevron-left" size={35} color={COLOR.WHITE} />
+      </TouchableOpacity>
+      <Text style={style.headerText}>Share</Text>
+    </View>
     <ItemSeparator height={setHeight(37)}/>
    </ScrollView>
   )
@@ -67,6 +73,20 @@ const style =StyleSheet.create({
     position:"absolute",
     top:0,
     elevation:9
+  },
+  headerContainer:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    paddingHorizontal:20,
+    position:'absolute',
+    right:0,
+    left:0,
+    top:50,
+    elevation:20,
+  },
+  headerText:{
+    color:COLOR.WHITE
   }
 })
 
