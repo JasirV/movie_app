@@ -13,7 +13,7 @@ import ItemSeparator from "../components/itemSeparator";
 import MovieCard from "../components/movieCard";
 import { getNowPlayingMovies, getUpcomingMovies,getGenres } from "../services/movieService";
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [acitcveGoner,setActiveGoner]=useState("All")
   const [nowPlaying,setNowPlaying]=useState({})
   const [upcoming,setUpcoming]=useState({})
@@ -61,7 +61,7 @@ const HomeScreen = () => {
           ListFooterComponent={()=> <ItemSeparator width={20}/>}
           ListHeaderComponent={<ItemSeparator  width={20} />}
           ItemSeparatorComponent={() => <ItemSeparator  width={20} />}
-          renderItem={({ item }) => <MovieCard titile={item.title} language={item.original_language} voteAverage={item.vote_average} voteCount={item.vote_count} poster={item.poster_path}/>}
+          renderItem={({ item }) => <MovieCard titile={item.title} language={item.original_language} voteAverage={item.vote_average} voteCount={item.vote_count} poster={item.poster_path} onPress={()=>navigation.navigate('movie',{movieId:item.id})}/>}
           />
         </View>
 
@@ -79,7 +79,7 @@ const HomeScreen = () => {
           ListFooterComponent={()=> <ItemSeparator width={20}/>}
           ListHeaderComponent={<ItemSeparator  width={20} />}
           ItemSeparatorComponent={() => <ItemSeparator  width={20} />}
-          renderItem={({ item }) => <MovieCard titile={item.title} language={item.original_language} voteAverage={item.vote_average} voteCount={item.vote_count} poster={item.poster_path} size={.6}/>}
+          renderItem={({ item }) => <MovieCard titile={item.title} language={item.original_language} voteAverage={item.vote_average} voteCount={item.vote_count} poster={item.poster_path} size={.6} onPress={()=>navigation.navigate('movie',{movieId:item.id})}/>}
           />
         </View>
     </ScrollView>

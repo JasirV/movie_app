@@ -6,10 +6,10 @@ import IMAGE from '../constants/images'
 import { getPoster } from '../services/movieService';
 
 
-const MovieCard = ({titile,language,voteAverage,mvoteCount,poster,size}) => {
+const MovieCard = ({titile,language,voteAverage,mvoteCount,poster,size,onPress}) => {
     const [like,setLike]=useState(false)
   return (
-    <TouchableOpacity activeOpacity={0.8}>
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
     <ImageBackground imageStyle={{borderRadius:12}} style={{...style.container,width:230*size,height:340*size}} source={{uri:getPoster(poster)}}>
         <View style={{...style.imdbContainer,paddingVertical:3*size}}>
             <Image source={IMAGE.IMDB} resizeMode='cover' style={{...style.imbImage,height:20*size,width:50*size}}/>
