@@ -1,4 +1,4 @@
-import { TMDB_BASE_URL, TMDB_IMAGE_BASE_URL, ENDPOINTS } from '../constants/urls';
+import { TMDB_BASE_URL, TMDB_IMAGE_BASE_URL, ENDPOINTS, YOUTUBE_BASE_URL } from '../constants/urls';
 import axios from 'axios';
 
 const api = axios.create({
@@ -36,9 +36,9 @@ const getGenres = async () => {
         return null; // Return null if API call fails
     }
 }; 
-const getMovie = async (id) => {
+const getMovie = async (id,append_to_response="") => {
     try {
-        const response = await api.get(`${ENDPOINTS.MOVIE}/${id}`);
+        const response = await api.get(`${ENDPOINTS.MOVIE}/${id}`,append_to_response?{params:{append_to_response}}:null);
         return response; // Return only the movie data
     } catch (error) {
         console.error("Error fetching now playing movies:", error.response?.data || error.message);
@@ -48,5 +48,6 @@ const getMovie = async (id) => {
 
 // Function to get the full poster URL
 const getPoster = (path) => `${TMDB_IMAGE_BASE_URL}/original/${path}`;
+const getVideo = (key) => `${YOUTUBE_BASE_URL}?v=${key}`;
 
-export { getNowPlayingMovies, getPoster,getUpcomingMovies,getGenres,getMovie }
+export { getNowPlayingMovies, getPoster,getUpcomingMovies,getGenres,getMovie,getVideo }

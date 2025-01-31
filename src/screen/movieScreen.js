@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Image, ScrollView, StatusBar, StyleSheet, Text,  TouchableOpacity, View } from 'react-native'
+import { Dimensions, Image, Linking, ScrollView, StatusBar, StyleSheet, Text,  TouchableOpacity, View } from 'react-native'
 import COLOR from '../constants/colors'
-import { getMovie, getPoster } from '../services/movieService'
+import { getMovie, getPoster, getVideo } from '../services/movieService'
 import ItemSeparator from '../components/itemSeparator'
 import {LinearGradient} from 'expo-linear-gradient'
-import { Feather } from '@expo/vector-icons';
-
+import { Feather, Ionicons } from '@expo/vector-icons';
+import {APPEEND_TO_RESPONSE as AR} from "../constants/urls"
 const {height,width}=Dimensions.get('screen')
 const setHeight=(h)=>(height/100)*h
 const setWidth =(w)=>(width/100)*w
@@ -15,7 +15,7 @@ const [movie,setMovie]=useState({})
   useEffect(()=>{
     const fetching=async()=>{
       try {
-        const respons=await getMovie(movieId)
+        const respons=await getMovie(movieId,`${AR.VIDEOS}`)
         setMovie(respons.data)
       } catch (error) {
         console.log(error)
@@ -35,11 +35,14 @@ const [movie,setMovie]=useState({})
       <Image  style={style.moviePosterImage} resizeMode='cover' source={{uri:getPoster(movie.backdrop_path)}}/>
     </View>
     <View style={style.headerContainer}>
-      <TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.goBack()}>
       <Feather name="chevron-left" size={35} color={COLOR.WHITE} />
       </TouchableOpacity>
       <Text style={style.headerText}>Share</Text>
     </View>
+    <TouchableOpacity style={style.playButton} onPress={()=>Linking.openURL(getVideo(movie.videos.results[0].key))}>
+    <Ionicons name="play-circle-outline" size={70} color={COLOR.WHITE} />
+    </TouchableOpacity>
     <ItemSeparator height={setHeight(37)}/>
    </ScrollView>
   )
@@ -87,6 +90,12 @@ const style =StyleSheet.create({
   },
   headerText:{
     color:COLOR.WHITE
+  },
+  playButton:{
+    position:'absolute',
+    top:110,
+    left:setWidth(50)-70/2,
+    elevation:10
   }
 })
 
