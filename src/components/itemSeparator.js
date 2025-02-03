@@ -1,9 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 
-function ItemSeparator({ height, width }) {
-  return <View style={{ height, width }} />;
-}
+const ItemSeparator = ({ height, width }) => {
+  return <View style={{ width, height }} />;
+};
 
 ItemSeparator.defaultProps = {
   height: 0,

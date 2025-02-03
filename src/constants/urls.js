@@ -12,6 +12,9 @@ const ENDPOINTS ={
 }
 
 const  APPEEND_TO_RESPONSE={
-    VIDEOS:'videos'
+    VIDEOS:'videos',
+    CREDITS: "credits",
+    RECOMMENDATIONS: "recommendations",
+    SIMILAR: "similar",
 }
 export {TMDB_BASE_URL,TMDB_API_KEY,TMDB_IMAGE_BASE_URL,ENDPOINTS,APPEEND_TO_RESPONSE,YOUTUBE_BASE_URL}  
